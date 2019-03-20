@@ -1,0 +1,315 @@
+@charset "UTF-8";
+/* CSS Document */
+/* universal.css */
+
+/* Fontfaces
+--------------------------------------------*/
+@font-face {
+	font-family: Muli-Italic;
+	src: url(fontface/Muli-Italic.ttf);
+}
+
+@font-face {
+	font-family: Muli-Light;
+	src: url(fontface/Muli-Light.ttf);
+}
+
+@font-face {
+	font-family: Muli-LightItalic;
+	src: url(fontface/Muli-LightItalic.ttf);
+}
+
+@font-face {
+	font-family: Muli-Regular;
+	src: url(fontface/Muli-Regular.ttf);
+}
+
+/* Link Color Reset
+--------------------------------------------*/
+a:link,
+a:visited,
+a:active,
+a:hover,
+body {
+	text-decoration: none;
+	color: #1f1f1f;
+}
+
+/* Body Reset
+--------------------------------------------*/
+html {
+	padding: 0;
+}
+
+body {
+	font-family: Muli-Regular, sans-serif;
+	margin: 0;
+	background-color: #fafafa;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 0;
+}
+
+
+/* Menu bar
+--------------------------------------------*/
+div.header {
+	width: 90%;
+	height: 108px;
+	position: absolute;
+/* 	background-image: -webkit-linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,.1) 100%); */
+	border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+div.appLogo {
+	background-image: url(images/appLogo.png);
+	background-size: 310px 80px;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 80px;
+	width: 310px;
+	bottom: 10px;
+	position: absolute;
+}
+
+div.mainWindow {
+	width: 390px;
+	height: 130px;
+	border: 1px solid rgba(144,144,144,.5);
+	border-radius: 4px;
+	position: relative;
+	box-shadow: 0px 5px 30px -15px rgba(0,0,0,.5);
+	overflow: hidden;
+	background-color: rgba(255,255,255,.8);
+	top: 150px;
+}
+
+div.error {
+	width: 390px;
+	height: 130px;
+	position: absolute;
+	background-color: rgba(0,0,0,.8);
+	top: 130px;
+	left: 0;
+	transition: .3s cubic-bezier(0.235, 0.005, 0.260, 1.000);
+}
+
+div.errorIcon {
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	left: 20px;
+	border-radius: 60px;
+	border: 1px solid rgba(255,255,255,.8);
+	font-family:  Muli-Light, sans-serif;
+	font-size: 36px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 60px;
+	vertical-align: middle;
+}
+
+div.errorNoBtn > div.errorIcon {
+	top: 34px;
+}
+
+div.error1Col > div.errorIcon,
+div.error2Col > div.errorIcon{
+	top: 12px;
+}
+
+p.errorMsg {
+	width: 300px;
+	height: 60px;
+	position: absolute;
+	color: #ffffff;
+	left: 100px;
+
+}
+
+div.errorNoBtn > p.errorMsg {
+	top: 32px;
+}
+
+div.error1Col > p.errorMsg,
+div.error2Col > p.errorMsg {
+	top: 12px;
+}
+
+p.errorMsg span {
+	font-size: 12px;
+	color: rgb(144,144,144);
+}
+
+div.btn1Col,
+div.btn2Col {
+	height: 46px;
+	position: absolute;
+	bottom: 0;
+	font-size: 16px;
+	color: rgba(255,255,255,.8);
+	text-align: center;
+	line-height: 46px;
+	vertical-align: middle;
+	transition: .1s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+}
+
+div.btn1Col {
+	width: 390px;
+}
+
+div.btn2Col {
+	width: 195px;
+}
+
+div.btn1Col:hover,
+div.btn2Col:hover {
+	color: rgba(255,255,255,.9);
+}
+
+div.btn1Col:active,
+div.btn2Col:active {
+	font-size: 15px;
+}
+
+div.errorSplit {
+	width: 390px;
+	height: 1px;
+	position: absolute;
+	bottom: 46px;
+	left: 0;
+	background-color: rgba(204,204,204,.3);
+}
+
+div.div.btn2ColLeft {
+	left: 0;
+}
+
+div.btn2ColRight {
+	left: 195px;
+}
+
+div.errorBtnSplit {
+	width: 1px;
+	height: 46px;
+	position: absolute;
+	bottom: 0px;
+	left: 195px;
+	background-color: rgba(204,204,204,.3);
+}
+
+div.windowHeader {
+	position: relative;
+	width: 390px;
+	height: 40px;
+	left: 0;
+	top: 0;
+	background-image: url(images/windowHeader_bg.png);
+	background-size: 390px 40px;
+	background-position-y: 0;
+	background-position-x: 0;
+	background-repeat: repeat-y;
+	opacity: .6;
+}
+
+div.windowTitle {
+	width: 60px;
+	height: 40px;
+	background-image: url(images/windowTitle_AirType_Logo.png);
+	background-size: 60px 20px;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 0 auto;
+}
+
+form.typeContent {
+	position: relative;
+	width: 390px;
+	height: 60px;
+	border-top: 1px solid rgb(204,204,204);
+	border-bottom: 1px solid rgb(204,204,204);
+	background-color: rgba(255,255,255,.7);
+	position: relative;
+	top: 0px;
+	left: 0;
+}
+
+textarea.userInput {
+	width: 320px;
+	height: 40px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: none;
+	background: none;
+	margin: 0;
+	padding: 10px;
+	resize: none;
+	color: rgb(131,131,131);
+	font-size: 15px;
+}
+
+textarea.userInput:focus {
+	outline: none;
+}
+
+button.btnSentUserInput {
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	background-color: rgb(255,255,255);
+	border: none;
+	background-image: url(images/btnSend_normal.png);
+	background-size: 60px 60px;
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: .8;
+	transition: .1s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+}
+
+button.btnSentUserInput:hover {
+	opacity: 1;
+}
+
+button.btnSentUserInput:active {
+	background-size: 58px 58px;
+}
+
+div.btnSentSplit {
+	width: 1px;
+	height: 60px;
+	position: absolute;
+	top: 0;
+	right: 60px;
+	background-color: rgba(204,204,204,.3);
+}
+
+div.windowFooter {
+	position: relative;
+	width: 390px;
+	height: 30px;
+	bottom: 0;
+}
+
+p.needHelp {
+	position: absolute;
+	width: 390px;
+	height: 30px;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 10px;
+	font-family: Muli-Light, sans-serif;
+	line-height: 30px;
+	vertical-align: middle;
+	padding-left: 10px;
+	color: rgb(131,131,131);
+}
+
+p.needHelp span {
+	font-family: Muli-Regular, sans-serif;
+}

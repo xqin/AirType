@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang='zh-hk'>
+<head>
+<title>AirType Web Access</title>
+<!-- Meta Data -->
+<meta charset='utf-8'>
+<!-- CSS -->
+<link rel='stylesheet' type='text/css' href='css/universal.css' />
+<!-- JavaScript -->
+<script src="js/jquery-1.11.1.min.js"></script>
+<script type='text/javascript' src='js/layout-functions.js'></script>
+</head>
+
+<body>
+<div class="header">
+	<div class="appLogo"></div>
+</div>
+
+<div class="mainWindow">
+	<div class="windowHeader">
+		<div class="windowTitle"></div>
+	</div>
+	<form class="typeContent">
+		<textarea class="userInput" id="target"></textarea>
+		<button class="btnSentUserInput" type="button" id="submitBtn"></button>
+		<div class="btnSentSplit"></div>
+	</form>
+	<div class="windowFooter">
+		<p class="needHelp">Switch to Air<span>Type</span> on your iOS device. <span></span>
+	</div>
+<!-- 	Error with no button -->
+	<div class="error errorNoBtn">
+		<div class="errorIcon">!</div>
+		<p class="errorMsg"></p>
+	</div>
+<!-- 	Error with 1 button -->
+	<div class="error error1Col">
+		<div class="errorIcon">!</div>
+		<p class="errorMsg"></p>
+		<div class="errorSplit"></div>
+		<div class="btn1Col">Cancel</div>
+	</div>
+<!-- 	Error with 2 buttons -->
+	<div class="error error2Col">
+		<div class="errorIcon">!</div>
+		<p class="errorMsg"></p>
+		<div class="errorSplit"></div>
+		<div class="errorBtnSplit"></div>
+		<div class="btn2Col btn2ColLeft">Cancel</div>
+		<div class="btn2Col btn2ColRight">Retry</div>
+	</div>
+</div>
+
+<script>
+//0 -- disconnected, 1 -- connecting, 2 - connected
+var webSocketConnectionState = 0
+var ws
+
+function createSocket(){
+	if(webSocketConnectionState == 0){
+		webSocketConnectionState = 1
+		ws = new WebSocket("ws://192.168.0.104:8307/service")
+
+		ws.onopen = function(){
+			dismissErrorMessage()
+			webSocketConnectionState = 2
+			$( "#target" ).focus()
+		}
+		ws.onmessage = function(evt) {
+			console.log('recv message', evt.data)
+		}
+		ws.onerror = function () {
+			console.log('onerror')
+			webSocketConnectionState = 0
+			setTimeout(createSocket, 50)
+		}
+		ws.onclose = function() {
+			console.log('onclose')
+			webSocketConnectionState = 0
+			showErrorMessageNoBtn("Waiting for keyboard", "Wait for auto-reconnect or refresh this page.")
+			setTimeout(createSocket, 50)
+		}
+	}
+}
+
+function sendMessage(msg){
+	if(webSocketConnectionState == 2){
+		ws.send(msg)
+	}
+}
+
+$( document ).ready(function() {
+	console.log( "document loaded" )
+	createSocket()
+})
+
+$( "#target" ).bind('keydown', function (e) {
+		var key = e.key
+
+		if (/^F[1-9]|F10|F11|F12$/.test(key)) {
+			return
+		}
+
+    switch (e.key) {
+			case 'Process': // 在开启输入法的情况下输入内容时 触发的
+			case 'ArrowLeft': // 四个方向键
+			case 'ArrowRight':
+			case 'ArrowUp':
+			case 'ArrowDown':
+      case 'Control':
+      case 'Alt':
+      case 'Shift':
+        return
+      case 'Backspace':
+        key = '#del$'
+        break
+      case 'Enter':
+				key = '\n'
+				if (e.ctrlKey) { // 如果在触发回车的时候,是有按Ctrl的, 则将文本框中的内容一起发过去.
+					key = $(this).val()
+					setTimeout(sendMessage.bind(null, '\n'), 0) // 延时发送一个回车
+				} else if (e.altKey) {
+					key = $(this).val() + '\n' // 换行
+				}
+				$(this).val('')
+				e.preventDefault()
+        break
+		}
+
+		// if(event.which == 8 && $('#target').val().length==0){
+		// var textToSend = "#del$"
+		// }
+
+    console.log('Send key', key)
+    sendMessage(key)
+    return true
+})
+
+$( "#submitBtn" ).click(function( event ) {
+	var textToSend = '\n'
+
+  if($('#target').val().length > 0){
+	  textToSend = $('#target').val()
+	}
+
+	sendMessage(textToSend)
+	$('#target').val('').focus()
+})
+</script>
+</body>
+</html>
